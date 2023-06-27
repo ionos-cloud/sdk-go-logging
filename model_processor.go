@@ -1,7 +1,7 @@
 /*
  * IONOS Logging REST API
  *
- * Logging as a Service (LaaS) is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
+ * Logging Service is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
  *
  * API version: 0.0.1
  */
@@ -22,6 +22,10 @@ type Processor struct {
 	Tag *string `json:"tag,omitempty"`
 	// Protocol to use as intake
 	Protocol *string `json:"protocol,omitempty"`
+	// Optional custom labels to filter and report logs
+	Labels *[]string `json:"labels,omitempty"`
+	// The configuration of the logs datastore
+	Destinations *[]Destination `json:"destinations,omitempty"`
 }
 
 // NewProcessor instantiates a new Processor object
@@ -156,6 +160,82 @@ func (o *Processor) HasProtocol() bool {
 	return false
 }
 
+// GetLabels returns the Labels field value
+// If the value is explicit nil, the zero value for []string will be returned
+func (o *Processor) GetLabels() *[]string {
+	if o == nil {
+		return nil
+	}
+
+	return o.Labels
+
+}
+
+// GetLabelsOk returns a tuple with the Labels field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Processor) GetLabelsOk() (*[]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return o.Labels, true
+}
+
+// SetLabels sets field value
+func (o *Processor) SetLabels(v []string) {
+
+	o.Labels = &v
+
+}
+
+// HasLabels returns a boolean if a field has been set.
+func (o *Processor) HasLabels() bool {
+	if o != nil && o.Labels != nil {
+		return true
+	}
+
+	return false
+}
+
+// GetDestinations returns the Destinations field value
+// If the value is explicit nil, the zero value for []Destination will be returned
+func (o *Processor) GetDestinations() *[]Destination {
+	if o == nil {
+		return nil
+	}
+
+	return o.Destinations
+
+}
+
+// GetDestinationsOk returns a tuple with the Destinations field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Processor) GetDestinationsOk() (*[]Destination, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return o.Destinations, true
+}
+
+// SetDestinations sets field value
+func (o *Processor) SetDestinations(v []Destination) {
+
+	o.Destinations = &v
+
+}
+
+// HasDestinations returns a boolean if a field has been set.
+func (o *Processor) HasDestinations() bool {
+	if o != nil && o.Destinations != nil {
+		return true
+	}
+
+	return false
+}
+
 func (o Processor) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Source != nil {
@@ -168,6 +248,14 @@ func (o Processor) MarshalJSON() ([]byte, error) {
 
 	if o.Protocol != nil {
 		toSerialize["protocol"] = o.Protocol
+	}
+
+	if o.Labels != nil {
+		toSerialize["labels"] = o.Labels
+	}
+
+	if o.Destinations != nil {
+		toSerialize["destinations"] = o.Destinations
 	}
 
 	return json.Marshal(toSerialize)

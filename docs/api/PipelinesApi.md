@@ -4,11 +4,78 @@ All URIs are relative to *https://logging.de-txl.ionos.com*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
+|[**PipelineKey**](PipelinesApi.md#PipelineKey) | **Post** /pipelines/{pipelineId}/key | Renews the key of a Pipeline|
 |[**PipelinesDelete**](PipelinesApi.md#PipelinesDelete) | **Delete** /pipelines/{pipelineId} | Delete a pipeline|
 |[**PipelinesFindById**](PipelinesApi.md#PipelinesFindById) | **Get** /pipelines/{pipelineId} | Fetch a pipeline|
 |[**PipelinesGet**](PipelinesApi.md#PipelinesGet) | **Get** /pipelines | List pipelines|
 |[**PipelinesPatch**](PipelinesApi.md#PipelinesPatch) | **Patch** /pipelines/{pipelineId} | Patch a pipeline|
 |[**PipelinesPost**](PipelinesApi.md#PipelinesPost) | **Post** /pipelines | Create a pipeline|
+
+
+
+## PipelineKey
+
+```go
+var result InlineResponse200 = PipelineKey(ctx, pipelineId)
+                      .Execute()
+```
+
+Renews the key of a Pipeline
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+
+    ionoscloud "github.com/ionos-cloud/sdk-go-logging"
+)
+
+func main() {
+    pipelineId := "pipelineId_example" // string | The unique ID of the pipeline
+
+    configuration := ionoscloud.NewConfiguration("USERNAME", "PASSWORD", "TOKEN", "HOST_URL")
+    apiClient := ionoscloud.NewAPIClient(configuration)
+    resource, resp, err := apiClient.PipelinesApi.PipelineKey(context.Background(), pipelineId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `PipelinesApi.PipelineKey``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", resp)
+    }
+    // response from `PipelineKey`: InlineResponse200
+    fmt.Fprintf(os.Stdout, "Response from `PipelinesApi.PipelineKey`: %v\n", resource)
+}
+```
+
+### Path Parameters
+
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+|**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.|
+|**pipelineId** | **string** | The unique ID of the pipeline | |
+
+### Other Parameters
+
+Other parameters are passed through a pointer to an apiPipelineKeyRequest struct via the builder pattern
+
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+
+### Return type
+
+[**InlineResponse200**](../models/InlineResponse200.md)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
 
@@ -33,7 +100,7 @@ import (
     "fmt"
     "os"
 
-    ionoscloud "github.com/ionos-cloud/sdk-go-laas"
+    ionoscloud "github.com/ionos-cloud/sdk-go-logging"
 )
 
 func main() {
@@ -41,7 +108,7 @@ func main() {
 
     configuration := ionoscloud.NewConfiguration("USERNAME", "PASSWORD", "TOKEN", "HOST_URL")
     apiClient := ionoscloud.NewAPIClient(configuration)
-    resource, resp, err := apiClient.PipelinesApi.PipelinesDelete(context.Background(), pipelineId).Execute()
+    resp, err := apiClient.PipelinesApi.PipelinesDelete(context.Background(), pipelineId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `PipelinesApi.PipelinesDelete``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", resp)
@@ -99,7 +166,7 @@ import (
     "fmt"
     "os"
 
-    ionoscloud "github.com/ionos-cloud/sdk-go-laas"
+    ionoscloud "github.com/ionos-cloud/sdk-go-logging"
 )
 
 func main() {
@@ -168,12 +235,12 @@ import (
     "fmt"
     "os"
 
-    ionoscloud "github.com/ionos-cloud/sdk-go-laas"
+    ionoscloud "github.com/ionos-cloud/sdk-go-logging"
 )
 
 func main() {
-    limit := int32(56) // int32 | the maximum number of elements to return (use together with offset for pagination). Default to 100 (optional)
-    offset := int32(56) // int32 | the first element (of the total list of elements) to include in the response (use together with limit for pagination). Default to 0 (optional)
+    limit := int32(56) // int32 | the maximum number of elements to return (use together with offset for pagination). Default to 100 (optional) (default to 0)
+    offset := int32(56) // int32 | the first element (of the total list of elements) to include in the response (use together with limit for pagination). Default to 0 (optional) (default to 0)
     orderBy := "orderBy_example" // string | Sorts the results alphanumerically in ascending order based on the specified property (optional)
 
     configuration := ionoscloud.NewConfiguration("USERNAME", "PASSWORD", "TOKEN", "HOST_URL")
@@ -199,8 +266,8 @@ Other parameters are passed through a pointer to an apiPipelinesGetRequest struc
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **limit** | **int32** | the maximum number of elements to return (use together with offset for pagination). Default to 100 | |
-| **offset** | **int32** | the first element (of the total list of elements) to include in the response (use together with limit for pagination). Default to 0 | |
+| **limit** | **int32** | the maximum number of elements to return (use together with offset for pagination). Default to 100 | [default to 0]|
+| **offset** | **int32** | the first element (of the total list of elements) to include in the response (use together with limit for pagination). Default to 0 | [default to 0]|
 | **orderBy** | **string** | Sorts the results alphanumerically in ascending order based on the specified property | |
 
 ### Return type
@@ -236,7 +303,7 @@ import (
     "fmt"
     "os"
 
-    ionoscloud "github.com/ionos-cloud/sdk-go-laas"
+    ionoscloud "github.com/ionos-cloud/sdk-go-logging"
 )
 
 func main() {
@@ -278,7 +345,7 @@ Other parameters are passed through a pointer to an apiPipelinesPatchRequest str
 
 ### HTTP request headers
 
-- **Content-Type**: application/merge-patch+json
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
@@ -305,7 +372,7 @@ import (
     "fmt"
     "os"
 
-    ionoscloud "github.com/ionos-cloud/sdk-go-laas"
+    ionoscloud "github.com/ionos-cloud/sdk-go-logging"
 )
 
 func main() {

@@ -8,8 +8,8 @@
 |**Source** | Pointer to **string** | The source parser to be used | [optional] |
 |**Tag** | Pointer to **string** | Tag is to distinguish different pipelines. must be unique amongst the pipeline&#39;s array items. | [optional] |
 |**Protocol** | Pointer to **string** | Protocol to use as intake | [optional] |
+|**Labels** | Pointer to **[]string** | Optional custom labels to filter and report logs | [optional] |
 |**Destinations** | Pointer to [**[]Destination**](Destination.md) |  | [optional] |
-|**Status** | Pointer to **string** | To display wether the logging stream is Ready/Not Ready | [optional] |
 
 ## Methods
 
@@ -130,6 +130,31 @@ SetProtocol sets Protocol field to given value.
 
 HasProtocol returns a boolean if a field has been set.
 
+### GetLabels
+
+`func (o *ResponsePipeline) GetLabels() []string`
+
+GetLabels returns the Labels field if non-nil, zero value otherwise.
+
+### GetLabelsOk
+
+`func (o *ResponsePipeline) GetLabelsOk() (*[]string, bool)`
+
+GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLabels
+
+`func (o *ResponsePipeline) SetLabels(v []string)`
+
+SetLabels sets Labels field to given value.
+
+### HasLabels
+
+`func (o *ResponsePipeline) HasLabels() bool`
+
+HasLabels returns a boolean if a field has been set.
+
 ### GetDestinations
 
 `func (o *ResponsePipeline) GetDestinations() []Destination`
@@ -154,30 +179,5 @@ SetDestinations sets Destinations field to given value.
 `func (o *ResponsePipeline) HasDestinations() bool`
 
 HasDestinations returns a boolean if a field has been set.
-
-### GetStatus
-
-`func (o *ResponsePipeline) GetStatus() string`
-
-GetStatus returns the Status field if non-nil, zero value otherwise.
-
-### GetStatusOk
-
-`func (o *ResponsePipeline) GetStatusOk() (*string, bool)`
-
-GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetStatus
-
-`func (o *ResponsePipeline) SetStatus(v string)`
-
-SetStatus sets Status field to given value.
-
-### HasStatus
-
-`func (o *ResponsePipeline) HasStatus() bool`
-
-HasStatus returns a boolean if a field has been set.
 
 

@@ -1,7 +1,7 @@
 /*
  * IONOS Logging REST API
  *
- * Logging as a Service (LaaS) is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
+ * Logging Service is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
  *
  * API version: 0.0.1
  */
@@ -13,7 +13,6 @@ package ionoscloud
 import (
 	"encoding/json"
 	"reflect"
-	"strings"
 	"time"
 )
 
@@ -753,11 +752,6 @@ func (t *IonosTime) UnmarshalJSON(data []byte) error {
 	}
 	if str[len(str)-1] == '"' {
 		str = str[:len(str)-1]
-	}
-	if !strings.Contains(str, "Z") {
-		/* forcefully adding timezone suffix to be able to parse the
-		 * string using RFC3339 */
-		str += "Z"
 	}
 	tt, err := time.Parse(time.RFC3339, str)
 	if err != nil {

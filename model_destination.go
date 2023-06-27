@@ -1,7 +1,7 @@
 /*
  * IONOS Logging REST API
  *
- * Logging as a Service (LaaS) is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
+ * Logging Service is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
  *
  * API version: 0.0.1
  */
@@ -18,6 +18,8 @@ import (
 type Destination struct {
 	// The internal output stream to send logs to
 	Type *string `json:"type,omitempty"`
+	// defines the number of days a log record should be kept in loki. Works with loki destination type only.
+	RetentionInDays *int32 `json:"retentionInDays,omitempty"`
 }
 
 // NewDestination instantiates a new Destination object
@@ -27,6 +29,11 @@ type Destination struct {
 func NewDestination() *Destination {
 	this := Destination{}
 
+	var type_ string = "loki"
+	this.Type = &type_
+	var retentionInDays int32 = 30
+	this.RetentionInDays = &retentionInDays
+
 	return &this
 }
 
@@ -35,6 +42,10 @@ func NewDestination() *Destination {
 // but it doesn't guarantee that properties required by API are set
 func NewDestinationWithDefaults() *Destination {
 	this := Destination{}
+	var type_ string = "loki"
+	this.Type = &type_
+	var retentionInDays int32 = 30
+	this.RetentionInDays = &retentionInDays
 	return &this
 }
 
@@ -76,10 +87,52 @@ func (o *Destination) HasType() bool {
 	return false
 }
 
+// GetRetentionInDays returns the RetentionInDays field value
+// If the value is explicit nil, the zero value for int32 will be returned
+func (o *Destination) GetRetentionInDays() *int32 {
+	if o == nil {
+		return nil
+	}
+
+	return o.RetentionInDays
+
+}
+
+// GetRetentionInDaysOk returns a tuple with the RetentionInDays field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Destination) GetRetentionInDaysOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return o.RetentionInDays, true
+}
+
+// SetRetentionInDays sets field value
+func (o *Destination) SetRetentionInDays(v int32) {
+
+	o.RetentionInDays = &v
+
+}
+
+// HasRetentionInDays returns a boolean if a field has been set.
+func (o *Destination) HasRetentionInDays() bool {
+	if o != nil && o.RetentionInDays != nil {
+		return true
+	}
+
+	return false
+}
+
 func (o Destination) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Type != nil {
 		toSerialize["type"] = o.Type
+	}
+
+	if o.RetentionInDays != nil {
+		toSerialize["retentionInDays"] = o.RetentionInDays
 	}
 
 	return json.Marshal(toSerialize)

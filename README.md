@@ -1,6 +1,6 @@
 # Go API client for ionoscloud
 
-Logging as a Service (LaaS) is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points.
+Logging Service is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points.
 This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API.
 The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
 
@@ -80,12 +80,12 @@ All URIs are relative to *https://logging.de-txl.ionos.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*PipelinesApi* | [**PipelineKey**](docs/api/PipelinesApi.md#pipelinekey) | **Post** /pipelines/{pipelineId}/key | Renews the key of a Pipeline
 *PipelinesApi* | [**PipelinesDelete**](docs/api/PipelinesApi.md#pipelinesdelete) | **Delete** /pipelines/{pipelineId} | Delete a pipeline
 *PipelinesApi* | [**PipelinesFindById**](docs/api/PipelinesApi.md#pipelinesfindbyid) | **Get** /pipelines/{pipelineId} | Fetch a pipeline
 *PipelinesApi* | [**PipelinesGet**](docs/api/PipelinesApi.md#pipelinesget) | **Get** /pipelines | List pipelines
 *PipelinesApi* | [**PipelinesPatch**](docs/api/PipelinesApi.md#pipelinespatch) | **Patch** /pipelines/{pipelineId} | Patch a pipeline
 *PipelinesApi* | [**PipelinesPost**](docs/api/PipelinesApi.md#pipelinespost) | **Post** /pipelines | Create a pipeline
-*TokensApi* | [**TokensPost**](docs/api/TokensApi.md#tokenspost) | **Post** /tokens | 
 
 
 ## Documentation For Models
@@ -97,8 +97,6 @@ Class | Method | HTTP request | Description
  - [ErrorMessage](docs/models/ErrorMessage.md)
  - [ErrorResponse](docs/models/ErrorResponse.md)
  - [InlineResponse200](docs/models/InlineResponse200.md)
- - [InlineResponse404](docs/models/InlineResponse404.md)
- - [InlineResponse404Message](docs/models/InlineResponse404Message.md)
  - [Metadata](docs/models/Metadata.md)
  - [PatchRequest](docs/models/PatchRequest.md)
  - [PatchRequestPipeline](docs/models/PatchRequestPipeline.md)
@@ -110,7 +108,6 @@ Class | Method | HTTP request | Description
  - [ResponsePipeline](docs/models/ResponsePipeline.md)
  - [ResponsePipelineAllOf](docs/models/ResponsePipelineAllOf.md)
  - [ResponsePipelineAllOf1](docs/models/ResponsePipelineAllOf1.md)
- - [ResponsePipelineAllOf2](docs/models/ResponsePipelineAllOf2.md)
 
 
 ## Documentation For Authorization

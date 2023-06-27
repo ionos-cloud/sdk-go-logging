@@ -1,7 +1,7 @@
 /*
  * IONOS Logging REST API
  *
- * Logging as a Service (LaaS) is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
+ * Logging Service is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
  *
  * API version: 0.0.1
  */
@@ -22,10 +22,10 @@ type ResponsePipeline struct {
 	// Tag is to distinguish different pipelines. must be unique amongst the pipeline's array items.
 	Tag *string `json:"tag,omitempty"`
 	// Protocol to use as intake
-	Protocol     *string        `json:"protocol,omitempty"`
+	Protocol *string `json:"protocol,omitempty"`
+	// Optional custom labels to filter and report logs
+	Labels       *[]string      `json:"labels,omitempty"`
 	Destinations *[]Destination `json:"destinations,omitempty"`
-	// To display wether the logging stream is Ready/Not Ready
-	Status *string `json:"status,omitempty"`
 }
 
 // NewResponsePipeline instantiates a new ResponsePipeline object
@@ -198,6 +198,44 @@ func (o *ResponsePipeline) HasProtocol() bool {
 	return false
 }
 
+// GetLabels returns the Labels field value
+// If the value is explicit nil, the zero value for []string will be returned
+func (o *ResponsePipeline) GetLabels() *[]string {
+	if o == nil {
+		return nil
+	}
+
+	return o.Labels
+
+}
+
+// GetLabelsOk returns a tuple with the Labels field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *ResponsePipeline) GetLabelsOk() (*[]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return o.Labels, true
+}
+
+// SetLabels sets field value
+func (o *ResponsePipeline) SetLabels(v []string) {
+
+	o.Labels = &v
+
+}
+
+// HasLabels returns a boolean if a field has been set.
+func (o *ResponsePipeline) HasLabels() bool {
+	if o != nil && o.Labels != nil {
+		return true
+	}
+
+	return false
+}
+
 // GetDestinations returns the Destinations field value
 // If the value is explicit nil, the zero value for []Destination will be returned
 func (o *ResponsePipeline) GetDestinations() *[]Destination {
@@ -236,44 +274,6 @@ func (o *ResponsePipeline) HasDestinations() bool {
 	return false
 }
 
-// GetStatus returns the Status field value
-// If the value is explicit nil, the zero value for string will be returned
-func (o *ResponsePipeline) GetStatus() *string {
-	if o == nil {
-		return nil
-	}
-
-	return o.Status
-
-}
-
-// GetStatusOk returns a tuple with the Status field value
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *ResponsePipeline) GetStatusOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-
-	return o.Status, true
-}
-
-// SetStatus sets field value
-func (o *ResponsePipeline) SetStatus(v string) {
-
-	o.Status = &v
-
-}
-
-// HasStatus returns a boolean if a field has been set.
-func (o *ResponsePipeline) HasStatus() bool {
-	if o != nil && o.Status != nil {
-		return true
-	}
-
-	return false
-}
-
 func (o ResponsePipeline) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Public != nil {
@@ -292,12 +292,12 @@ func (o ResponsePipeline) MarshalJSON() ([]byte, error) {
 		toSerialize["protocol"] = o.Protocol
 	}
 
-	if o.Destinations != nil {
-		toSerialize["destinations"] = o.Destinations
+	if o.Labels != nil {
+		toSerialize["labels"] = o.Labels
 	}
 
-	if o.Status != nil {
-		toSerialize["status"] = o.Status
+	if o.Destinations != nil {
+		toSerialize["destinations"] = o.Destinations
 	}
 
 	return json.Marshal(toSerialize)

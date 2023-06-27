@@ -4,7 +4,7 @@
 
 |Name | Type | Description | Notes|
 |------------ | ------------- | ------------- | -------------|
-|**Token** | Pointer to **string** |  | [optional] |
+|**Key** | Pointer to **string** |  | [optional] |
 
 ## Methods
 
@@ -25,29 +25,29 @@ NewInlineResponse200WithDefaults instantiates a new InlineResponse200 object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetToken
+### GetKey
 
-`func (o *InlineResponse200) GetToken() string`
+`func (o *InlineResponse200) GetKey() string`
 
-GetToken returns the Token field if non-nil, zero value otherwise.
+GetKey returns the Key field if non-nil, zero value otherwise.
 
-### GetTokenOk
+### GetKeyOk
 
-`func (o *InlineResponse200) GetTokenOk() (*string, bool)`
+`func (o *InlineResponse200) GetKeyOk() (*string, bool)`
 
-GetTokenOk returns a tuple with the Token field if it's non-nil, zero value otherwise
+GetKeyOk returns a tuple with the Key field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetToken
+### SetKey
 
-`func (o *InlineResponse200) SetToken(v string)`
+`func (o *InlineResponse200) SetKey(v string)`
 
-SetToken sets Token field to given value.
+SetKey sets Key field to given value.
 
-### HasToken
+### HasKey
 
-`func (o *InlineResponse200) HasToken() bool`
+`func (o *InlineResponse200) HasKey() bool`
 
-HasToken returns a boolean if a field has been set.
+HasKey returns a boolean if a field has been set.
 
 

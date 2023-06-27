@@ -1,4 +1,4 @@
-module github.com/ionos-cloud/sdk-go-laas
+module github.com/ionos-cloud/sdk-go-logging
 
 go 1.18
 

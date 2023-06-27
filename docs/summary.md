@@ -6,7 +6,6 @@
 ## API
 
 * [PipelinesApi](api/PipelinesApi.md)
-* [TokensApi](api/TokensApi.md)
 
 ## Models
 
@@ -17,8 +16,6 @@
 * [ErrorMessage](models/ErrorMessage.md)
 * [ErrorResponse](models/ErrorResponse.md)
 * [InlineResponse200](models/InlineResponse200.md)
-* [InlineResponse404](models/InlineResponse404.md)
-* [InlineResponse404Message](models/InlineResponse404Message.md)
 * [Metadata](models/Metadata.md)
 * [PatchRequest](models/PatchRequest.md)
 * [PatchRequestPipeline](models/PatchRequestPipeline.md)
@@ -30,4 +27,3 @@
 * [ResponsePipeline](models/ResponsePipeline.md)
 * [ResponsePipelineAllOf](models/ResponsePipelineAllOf.md)
 * [ResponsePipelineAllOf1](models/ResponsePipelineAllOf1.md)
-* [ResponsePipelineAllOf2](models/ResponsePipelineAllOf2.md)

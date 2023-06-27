@@ -1,7 +1,7 @@
 /*
  * IONOS Logging REST API
  *
- * Logging as a Service (LaaS) is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
+ * Logging Service is a service that provides a centralized logging system where users are able to push and aggregate their system or application logs. This service also provides a visualization platform where users are able to observe, search and filter the logs and also create dashboards and alerts for their data points. This service can be managed through a browser-based \"Data Center Designer\" (DCD) tool or via an API. The API allows you to create logging pipelines or modify existing ones. It is designed to allow users to leverage the same power and flexibility found within the DCD visual tool. Both tools are consistent with their concepts and lend well to making the experience smooth and intuitive.
  *
  * API version: 0.0.1
  */
@@ -16,7 +16,7 @@ import (
 
 // InlineResponse200 struct for InlineResponse200
 type InlineResponse200 struct {
-	Token *string `json:"token,omitempty"`
+	Key *string `json:"key,omitempty"`
 }
 
 // NewInlineResponse200 instantiates a new InlineResponse200 object
@@ -37,38 +37,38 @@ func NewInlineResponse200WithDefaults() *InlineResponse200 {
 	return &this
 }
 
-// GetToken returns the Token field value
+// GetKey returns the Key field value
 // If the value is explicit nil, the zero value for string will be returned
-func (o *InlineResponse200) GetToken() *string {
+func (o *InlineResponse200) GetKey() *string {
 	if o == nil {
 		return nil
 	}
 
-	return o.Token
+	return o.Key
 
 }
 
-// GetTokenOk returns a tuple with the Token field value
+// GetKeyOk returns a tuple with the Key field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *InlineResponse200) GetTokenOk() (*string, bool) {
+func (o *InlineResponse200) GetKeyOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
 
-	return o.Token, true
+	return o.Key, true
 }
 
-// SetToken sets field value
-func (o *InlineResponse200) SetToken(v string) {
+// SetKey sets field value
+func (o *InlineResponse200) SetKey(v string) {
 
-	o.Token = &v
+	o.Key = &v
 
 }
 
-// HasToken returns a boolean if a field has been set.
-func (o *InlineResponse200) HasToken() bool {
-	if o != nil && o.Token != nil {
+// HasKey returns a boolean if a field has been set.
+func (o *InlineResponse200) HasKey() bool {
+	if o != nil && o.Key != nil {
 		return true
 	}
 
@@ -77,8 +77,8 @@ func (o *InlineResponse200) HasToken() bool {
 
 func (o InlineResponse200) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Token != nil {
-		toSerialize["token"] = o.Token
+	if o.Key != nil {
+		toSerialize["key"] = o.Key
 	}
 
 	return json.Marshal(toSerialize)
