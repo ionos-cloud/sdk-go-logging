@@ -4,7 +4,7 @@
 
 ### Overview
 
-The product is now in Geeneral Availability.
+The product is now in General Availability.
 
 ### Changed:
 
