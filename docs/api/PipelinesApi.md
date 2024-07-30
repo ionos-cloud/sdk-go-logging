@@ -16,7 +16,7 @@ All URIs are relative to *https://logging.de-txl.ionos.com*
 ## PipelinesDelete
 
 ```go
-var result Pipeline = PipelinesDelete(ctx, pipelineId)
+var result DeletedPipeline = PipelinesDelete(ctx, pipelineId)
                       .Execute()
 ```
 
@@ -47,7 +47,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `PipelinesApi.PipelinesDelete``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", resp)
     }
-    // response from `PipelinesDelete`: Pipeline
+    // response from `PipelinesDelete`: DeletedPipeline
     fmt.Fprintf(os.Stdout, "Response from `PipelinesApi.PipelinesDelete`: %v\n", resource)
 }
 ```
@@ -70,7 +70,7 @@ Other parameters are passed through a pointer to an apiPipelinesDeleteRequest st
 
 ### Return type
 
-[**Pipeline**](../models/Pipeline.md)
+[**DeletedPipeline**](../models/DeletedPipeline.md)
 
 ### HTTP request headers
 
@@ -206,7 +206,7 @@ import (
 
 func main() {
     limit := int32(56) // int32 | the maximum number of elements to return (use together with offset for pagination). Default to 100 (optional) (default to 0)
-    offset := int32(56) // int32 | the first element (of the total list of elements) to include in the response (use together with limit for pagination). Default to 0 (optional) (default to 0)
+    offset := int32(56) // int32 | the first element (of the total list of elements) to include in the response (use together with limit for pagination). Default to 0 (optional) (default to 1)
     orderBy := "orderBy_example" // string | Sorts the results alphanumerically in ascending order based on the specified property (optional)
 
     configuration := ionoscloud.NewConfiguration("USERNAME", "PASSWORD", "TOKEN", "HOST_URL")
@@ -233,7 +233,7 @@ Other parameters are passed through a pointer to an apiPipelinesGetRequest struc
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **limit** | **int32** | the maximum number of elements to return (use together with offset for pagination). Default to 100 | [default to 0]|
-| **offset** | **int32** | the first element (of the total list of elements) to include in the response (use together with limit for pagination). Default to 0 | [default to 0]|
+| **offset** | **int32** | the first element (of the total list of elements) to include in the response (use together with limit for pagination). Default to 0 | [default to 1]|
 | **orderBy** | **string** | Sorts the results alphanumerically in ascending order based on the specified property | |
 
 ### Return type
@@ -433,7 +433,7 @@ ctx = context.WithValue(context.Background(), {packageName}.ContextOperationServ
 ## PipelinesPost
 
 ```go
-var result Pipeline = PipelinesPost(ctx)
+var result ProvisioningPipeline = PipelinesPost(ctx)
                       .Pipeline(pipeline)
                       .Execute()
 ```
@@ -465,7 +465,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `PipelinesApi.PipelinesPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", resp)
     }
-    // response from `PipelinesPost`: Pipeline
+    // response from `PipelinesPost`: ProvisioningPipeline
     fmt.Fprintf(os.Stdout, "Response from `PipelinesApi.PipelinesPost`: %v\n", resource)
 }
 ```
@@ -485,7 +485,7 @@ Other parameters are passed through a pointer to an apiPipelinesPostRequest stru
 
 ### Return type
 
-[**Pipeline**](../models/Pipeline.md)
+[**ProvisioningPipeline**](../models/ProvisioningPipeline.md)
 
 ### HTTP request headers
 
