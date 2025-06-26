@@ -1,7 +1,7 @@
 /*
- * IONOS Logging REST API
+ * IONOS Logging Service REST API
  *
- * The logging service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data.  This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
+ * The Logging Service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data. This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
  *
  * API version: 0.0.1
  */
@@ -33,15 +33,15 @@ type ApiPipelinesDeleteRequest struct {
 	pipelineId string
 }
 
-func (r ApiPipelinesDeleteRequest) Execute() (DeletedPipeline, *APIResponse, error) {
+func (r ApiPipelinesDeleteRequest) Execute() (*APIResponse, error) {
 	return r.ApiService.PipelinesDeleteExecute(r)
 }
 
 /*
- * PipelinesDelete Delete a pipeline
- * Delete a logging pipeline.
+ * PipelinesDelete Delete Pipeline
+ * Deletes the specified Pipeline.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param pipelineId The unique ID of the pipeline
+ * @param pipelineId The ID (UUID) of the Pipeline.
  * @return ApiPipelinesDeleteRequest
  */
 func (a *PipelinesApiService) PipelinesDelete(ctx _context.Context, pipelineId string) ApiPipelinesDeleteRequest {
@@ -54,21 +54,19 @@ func (a *PipelinesApiService) PipelinesDelete(ctx _context.Context, pipelineId s
 
 /*
  * Execute executes the request
- * @return DeletedPipeline
  */
-func (a *PipelinesApiService) PipelinesDeleteExecute(r ApiPipelinesDeleteRequest) (DeletedPipeline, *APIResponse, error) {
+func (a *PipelinesApiService) PipelinesDeleteExecute(r ApiPipelinesDeleteRequest) (*APIResponse, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodDelete
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  DeletedPipeline
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PipelinesApiService.PipelinesDelete")
 	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
+		return nil, GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/pipelines/{pipelineId}"
@@ -95,23 +93,9 @@ func (a *PipelinesApiService) PipelinesDeleteExecute(r ApiPipelinesDeleteRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["tokenAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHTTPResponse, httpRequestTime, err := a.client.callAPI(req)
@@ -125,14 +109,14 @@ func (a *PipelinesApiService) PipelinesDeleteExecute(r ApiPipelinesDeleteRequest
 	}
 
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarAPIResponse, err
+		return localVarAPIResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarAPIResponse.Payload = localVarBody
 	if err != nil {
-		return localVarReturnValue, localVarAPIResponse, err
+		return localVarAPIResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -141,27 +125,80 @@ func (a *PipelinesApiService) PipelinesDeleteExecute(r ApiPipelinesDeleteRequest
 			body:       localVarBody,
 			error:      fmt.Sprintf("%s: %s", localVarHTTPResponse.Status, string(localVarBody)),
 		}
-		var v ErrorResponse
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		var v Error
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
 			newErr.error = err.Error()
-			return localVarReturnValue, localVarAPIResponse, newErr
+			return localVarAPIResponse, newErr
 		}
 		newErr.model = v
-		return localVarReturnValue, localVarAPIResponse, newErr
+		return localVarAPIResponse, newErr
 	}
 
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := GenericOpenAPIError{
-			statusCode: localVarHTTPResponse.StatusCode,
-			body:       localVarBody,
-			error:      err.Error(),
-		}
-		return localVarReturnValue, localVarAPIResponse, newErr
-	}
-
-	return localVarReturnValue, localVarAPIResponse, nil
+	return localVarAPIResponse, nil
 }
 
 type ApiPipelinesFindByIdRequest struct {
@@ -170,15 +207,15 @@ type ApiPipelinesFindByIdRequest struct {
 	pipelineId string
 }
 
-func (r ApiPipelinesFindByIdRequest) Execute() (Pipeline, *APIResponse, error) {
+func (r ApiPipelinesFindByIdRequest) Execute() (PipelineRead, *APIResponse, error) {
 	return r.ApiService.PipelinesFindByIdExecute(r)
 }
 
 /*
- * PipelinesFindById Fetch a pipeline
- * You can retrieve a pipeline by using its ID. This value can be found in the response body when a pipeline is created or when you GET a list of pipelines.
+ * PipelinesFindById Retrieve Pipeline
+ * Returns the Pipeline by ID.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param pipelineId The unique ID of the pipeline
+ * @param pipelineId The ID (UUID) of the Pipeline.
  * @return ApiPipelinesFindByIdRequest
  */
 func (a *PipelinesApiService) PipelinesFindById(ctx _context.Context, pipelineId string) ApiPipelinesFindByIdRequest {
@@ -191,16 +228,16 @@ func (a *PipelinesApiService) PipelinesFindById(ctx _context.Context, pipelineId
 
 /*
  * Execute executes the request
- * @return Pipeline
+ * @return PipelineRead
  */
-func (a *PipelinesApiService) PipelinesFindByIdExecute(r ApiPipelinesFindByIdRequest) (Pipeline, *APIResponse, error) {
+func (a *PipelinesApiService) PipelinesFindByIdExecute(r ApiPipelinesFindByIdRequest) (PipelineRead, *APIResponse, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  Pipeline
+		localVarReturnValue  PipelineRead
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PipelinesApiService.PipelinesFindById")
@@ -231,20 +268,6 @@ func (a *PipelinesApiService) PipelinesFindByIdExecute(r ApiPipelinesFindByIdReq
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["tokenAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -278,7 +301,70 @@ func (a *PipelinesApiService) PipelinesFindByIdExecute(r ApiPipelinesFindByIdReq
 			body:       localVarBody,
 			error:      fmt.Sprintf("%s: %s", localVarHTTPResponse.Status, string(localVarBody)),
 		}
-		var v ErrorResponse
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		var v Error
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
 			newErr.error = err.Error()
@@ -304,17 +390,17 @@ func (a *PipelinesApiService) PipelinesFindByIdExecute(r ApiPipelinesFindByIdReq
 type ApiPipelinesGetRequest struct {
 	ctx        _context.Context
 	ApiService *PipelinesApiService
-	limit      *int32
 	offset     *int32
+	limit      *int32
 	orderBy    *string
 }
 
-func (r ApiPipelinesGetRequest) Limit(limit int32) ApiPipelinesGetRequest {
-	r.limit = &limit
-	return r
-}
 func (r ApiPipelinesGetRequest) Offset(offset int32) ApiPipelinesGetRequest {
 	r.offset = &offset
+	return r
+}
+func (r ApiPipelinesGetRequest) Limit(limit int32) ApiPipelinesGetRequest {
+	r.limit = &limit
 	return r
 }
 func (r ApiPipelinesGetRequest) OrderBy(orderBy string) ApiPipelinesGetRequest {
@@ -322,16 +408,19 @@ func (r ApiPipelinesGetRequest) OrderBy(orderBy string) ApiPipelinesGetRequest {
 	return r
 }
 
-func (r ApiPipelinesGetRequest) Execute() (PipelineListResponse, *APIResponse, error) {
+func (r ApiPipelinesGetRequest) Execute() (PipelineReadList, *APIResponse, error) {
 	return r.ApiService.PipelinesGetExecute(r)
 }
 
 /*
- * PipelinesGet List pipelines
- * Retrieves a list of all logging pipelines.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiPipelinesGetRequest
- */
+  - PipelinesGet Retrieve all Pipelines
+  - This endpoint enables retrieving all Pipelines using
+
+pagination and optional filters.
+
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @return ApiPipelinesGetRequest
+*/
 func (a *PipelinesApiService) PipelinesGet(ctx _context.Context) ApiPipelinesGetRequest {
 	return ApiPipelinesGetRequest{
 		ApiService: a,
@@ -341,16 +430,16 @@ func (a *PipelinesApiService) PipelinesGet(ctx _context.Context) ApiPipelinesGet
 
 /*
  * Execute executes the request
- * @return PipelineListResponse
+ * @return PipelineReadList
  */
-func (a *PipelinesApiService) PipelinesGetExecute(r ApiPipelinesGetRequest) (PipelineListResponse, *APIResponse, error) {
+func (a *PipelinesApiService) PipelinesGetExecute(r ApiPipelinesGetRequest) (PipelineReadList, *APIResponse, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  PipelineListResponse
+		localVarReturnValue  PipelineReadList
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PipelinesApiService.PipelinesGet")
@@ -364,11 +453,11 @@ func (a *PipelinesApiService) PipelinesGetExecute(r ApiPipelinesGetRequest) (Pip
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
-	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
-	}
 	if r.offset != nil {
 		localVarQueryParams.Add("offset", parameterToString(*r.offset, ""))
+	}
+	if r.limit != nil {
+		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
 	}
 	if r.orderBy != nil {
 		localVarQueryParams.Add("orderBy", parameterToString(*r.orderBy, ""))
@@ -389,20 +478,6 @@ func (a *PipelinesApiService) PipelinesGetExecute(r ApiPipelinesGetRequest) (Pip
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["tokenAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
@@ -436,144 +511,61 @@ func (a *PipelinesApiService) PipelinesGetExecute(r ApiPipelinesGetRequest) (Pip
 			body:       localVarBody,
 			error:      fmt.Sprintf("%s: %s", localVarHTTPResponse.Status, string(localVarBody)),
 		}
-		var v ErrorResponse
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarAPIResponse, newErr
-		}
-		newErr.model = v
-		return localVarReturnValue, localVarAPIResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := GenericOpenAPIError{
-			statusCode: localVarHTTPResponse.StatusCode,
-			body:       localVarBody,
-			error:      err.Error(),
-		}
-		return localVarReturnValue, localVarAPIResponse, newErr
-	}
-
-	return localVarReturnValue, localVarAPIResponse, nil
-}
-
-type ApiPipelinesKeyPostRequest struct {
-	ctx        _context.Context
-	ApiService *PipelinesApiService
-	pipelineId string
-}
-
-func (r ApiPipelinesKeyPostRequest) Execute() (PipelinesKeyPost200Response, *APIResponse, error) {
-	return r.ApiService.PipelinesKeyPostExecute(r)
-}
-
-/*
- * PipelinesKeyPost Renews the key of a Pipeline
- * Generates a new key for a pipeline invalidating the old one. The key is used for authentication when sending logs (Shared_Key parameter in the context of fluent-bit).
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param pipelineId The unique ID of the pipeline
- * @return ApiPipelinesKeyPostRequest
- */
-func (a *PipelinesApiService) PipelinesKeyPost(ctx _context.Context, pipelineId string) ApiPipelinesKeyPostRequest {
-	return ApiPipelinesKeyPostRequest{
-		ApiService: a,
-		ctx:        ctx,
-		pipelineId: pipelineId,
-	}
-}
-
-/*
- * Execute executes the request
- * @return PipelinesKeyPost200Response
- */
-func (a *PipelinesApiService) PipelinesKeyPostExecute(r ApiPipelinesKeyPostRequest) (PipelinesKeyPost200Response, *APIResponse, error) {
-	var (
-		localVarHTTPMethod   = _nethttp.MethodPost
-		localVarPostBody     interface{}
-		localVarFormFileName string
-		localVarFileName     string
-		localVarFileBytes    []byte
-		localVarReturnValue  PipelinesKeyPost200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PipelinesApiService.PipelinesKeyPost")
-	if err != nil {
-		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/pipelines/{pipelineId}/key"
-	localVarPath = strings.Replace(localVarPath, "{"+"pipelineId"+"}", _neturl.PathEscape(parameterToString(r.pipelineId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := _neturl.Values{}
-	localVarFormParams := _neturl.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["tokenAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
 			}
+			newErr.model = v
 		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, httpRequestTime, err := a.client.callAPI(req)
-
-	localVarAPIResponse := &APIResponse{
-		Response:    localVarHTTPResponse,
-		Method:      localVarHTTPMethod,
-		RequestTime: httpRequestTime,
-		RequestURL:  localVarPath,
-		Operation:   "PipelinesKeyPost",
-	}
-
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarAPIResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarAPIResponse.Payload = localVarBody
-	if err != nil {
-		return localVarReturnValue, localVarAPIResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := GenericOpenAPIError{
-			statusCode: localVarHTTPResponse.StatusCode,
-			body:       localVarBody,
-			error:      fmt.Sprintf("%s: %s", localVarHTTPResponse.Status, string(localVarBody)),
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
 		}
-		var v ErrorResponse
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		var v Error
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
 			newErr.error = err.Error()
@@ -597,28 +589,31 @@ func (a *PipelinesApiService) PipelinesKeyPostExecute(r ApiPipelinesKeyPostReque
 }
 
 type ApiPipelinesPatchRequest struct {
-	ctx        _context.Context
-	ApiService *PipelinesApiService
-	pipelineId string
-	pipeline   *PipelinePatch
+	ctx           _context.Context
+	ApiService    *PipelinesApiService
+	pipelineId    string
+	pipelinePatch *PipelinePatch
 }
 
-func (r ApiPipelinesPatchRequest) Pipeline(pipeline PipelinePatch) ApiPipelinesPatchRequest {
-	r.pipeline = &pipeline
+func (r ApiPipelinesPatchRequest) PipelinePatch(pipelinePatch PipelinePatch) ApiPipelinesPatchRequest {
+	r.pipelinePatch = &pipelinePatch
 	return r
 }
 
-func (r ApiPipelinesPatchRequest) Execute() (Pipeline, *APIResponse, error) {
+func (r ApiPipelinesPatchRequest) Execute() (PipelineRead, *APIResponse, error) {
 	return r.ApiService.PipelinesPatchExecute(r)
 }
 
 /*
- * PipelinesPatch Patch a pipeline
- * Patch attributes of a logging pipeline.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param pipelineId The unique ID of the pipeline
- * @return ApiPipelinesPatchRequest
- */
+  - PipelinesPatch Updates Pipeline
+  - Changes Pipeline with the provided ID.
+
+Values provides will replace the existing data.
+
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param pipelineId The ID (UUID) of the Pipeline.
+  - @return ApiPipelinesPatchRequest
+*/
 func (a *PipelinesApiService) PipelinesPatch(ctx _context.Context, pipelineId string) ApiPipelinesPatchRequest {
 	return ApiPipelinesPatchRequest{
 		ApiService: a,
@@ -629,16 +624,16 @@ func (a *PipelinesApiService) PipelinesPatch(ctx _context.Context, pipelineId st
 
 /*
  * Execute executes the request
- * @return Pipeline
+ * @return PipelineRead
  */
-func (a *PipelinesApiService) PipelinesPatchExecute(r ApiPipelinesPatchRequest) (Pipeline, *APIResponse, error) {
+func (a *PipelinesApiService) PipelinesPatchExecute(r ApiPipelinesPatchRequest) (PipelineRead, *APIResponse, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPatch
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  Pipeline
+		localVarReturnValue  PipelineRead
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PipelinesApiService.PipelinesPatch")
@@ -652,8 +647,8 @@ func (a *PipelinesApiService) PipelinesPatchExecute(r ApiPipelinesPatchRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.pipeline == nil {
-		return localVarReturnValue, nil, reportError("pipeline is required and must be specified")
+	if r.pipelinePatch == nil {
+		return localVarReturnValue, nil, reportError("pipelinePatch is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -674,21 +669,7 @@ func (a *PipelinesApiService) PipelinesPatchExecute(r ApiPipelinesPatchRequest) 
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.pipeline
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["tokenAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
+	localVarPostBody = r.pipelinePatch
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -721,7 +702,97 @@ func (a *PipelinesApiService) PipelinesPatchExecute(r ApiPipelinesPatchRequest) 
 			body:       localVarBody,
 			error:      fmt.Sprintf("%s: %s", localVarHTTPResponse.Status, string(localVarBody)),
 		}
-		var v ErrorResponse
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 415 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		var v Error
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
 			newErr.error = err.Error()
@@ -745,26 +816,30 @@ func (a *PipelinesApiService) PipelinesPatchExecute(r ApiPipelinesPatchRequest) 
 }
 
 type ApiPipelinesPostRequest struct {
-	ctx        _context.Context
-	ApiService *PipelinesApiService
-	pipeline   *PipelineCreate
+	ctx            _context.Context
+	ApiService     *PipelinesApiService
+	pipelineCreate *PipelineCreate
 }
 
-func (r ApiPipelinesPostRequest) Pipeline(pipeline PipelineCreate) ApiPipelinesPostRequest {
-	r.pipeline = &pipeline
+func (r ApiPipelinesPostRequest) PipelineCreate(pipelineCreate PipelineCreate) ApiPipelinesPostRequest {
+	r.pipelineCreate = &pipelineCreate
 	return r
 }
 
-func (r ApiPipelinesPostRequest) Execute() (ProvisioningPipeline, *APIResponse, error) {
+func (r ApiPipelinesPostRequest) Execute() (PipelineRead, *APIResponse, error) {
 	return r.ApiService.PipelinesPostExecute(r)
 }
 
 /*
- * PipelinesPost Create a pipeline
- * Creates a new logging pipeline.
- * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiPipelinesPostRequest
- */
+  - PipelinesPost Create Pipeline
+  - Creates a new Pipeline.
+
+The full Pipeline needs to be provided to create the object.
+Optional data will be filled with defaults or left empty.
+
+  - @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @return ApiPipelinesPostRequest
+*/
 func (a *PipelinesApiService) PipelinesPost(ctx _context.Context) ApiPipelinesPostRequest {
 	return ApiPipelinesPostRequest{
 		ApiService: a,
@@ -774,16 +849,16 @@ func (a *PipelinesApiService) PipelinesPost(ctx _context.Context) ApiPipelinesPo
 
 /*
  * Execute executes the request
- * @return ProvisioningPipeline
+ * @return PipelineRead
  */
-func (a *PipelinesApiService) PipelinesPostExecute(r ApiPipelinesPostRequest) (ProvisioningPipeline, *APIResponse, error) {
+func (a *PipelinesApiService) PipelinesPostExecute(r ApiPipelinesPostRequest) (PipelineRead, *APIResponse, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  ProvisioningPipeline
+		localVarReturnValue  PipelineRead
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PipelinesApiService.PipelinesPost")
@@ -796,8 +871,8 @@ func (a *PipelinesApiService) PipelinesPostExecute(r ApiPipelinesPostRequest) (P
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.pipeline == nil {
-		return localVarReturnValue, nil, reportError("pipeline is required and must be specified")
+	if r.pipelineCreate == nil {
+		return localVarReturnValue, nil, reportError("pipelineCreate is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -818,21 +893,7 @@ func (a *PipelinesApiService) PipelinesPostExecute(r ApiPipelinesPostRequest) (P
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.pipeline
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["tokenAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
+	localVarPostBody = r.pipelineCreate
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -865,7 +926,79 @@ func (a *PipelinesApiService) PipelinesPostExecute(r ApiPipelinesPostRequest) (P
 			body:       localVarBody,
 			error:      fmt.Sprintf("%s: %s", localVarHTTPResponse.Status, string(localVarBody)),
 		}
-		var v ErrorResponse
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 415 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarAPIResponse, newErr
+			}
+			newErr.model = v
+		}
+		var v Error
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
 			newErr.error = err.Error()

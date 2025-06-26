@@ -4,15 +4,13 @@
 
 |Name | Type | Description | Notes|
 |------------ | ------------- | ------------- | -------------|
-|**CreatedDate** | Pointer to [**time.Time**](time.Time.md) | The ISO 8601 creation timestamp. | [optional] |
-|**CreatedBy** | Pointer to **string** |  | [optional] |
-|**CreatedByUserId** | Pointer to **string** |  | [optional] |
-|**CreatedByUserUuid** | Pointer to **string** |  | [optional] |
-|**LastModifiedDate** | Pointer to [**time.Time**](time.Time.md) | The ISO 8601 modified timestamp. | [optional] |
-|**LastModifiedBy** | Pointer to **string** |  | [optional] |
-|**LastModifiedByUserId** | Pointer to **string** |  | [optional] |
-|**LastModifiedByUserUuid** | Pointer to **string** |  | [optional] |
-|**State** | Pointer to **string** | The current state reported back by the pipeline. | [optional] |
+|**CreatedDate** | Pointer to [**time.Time**](time.Time.md) | The ISO 8601 creation timestamp. | [optional] [readonly] |
+|**CreatedBy** | Pointer to **string** | Unique name of the identity that created the resource. | [optional] [readonly] |
+|**CreatedByUserId** | Pointer to **string** | Unique id of the identity that created the resource. | [optional] [readonly] |
+|**LastModifiedDate** | Pointer to [**time.Time**](time.Time.md) | The ISO 8601 modified timestamp. | [optional] [readonly] |
+|**LastModifiedBy** | Pointer to **string** | Unique name of the identity that last modified the resource. | [optional] [readonly] |
+|**LastModifiedByUserId** | Pointer to **string** | Unique id of the identity that last modified the resource. | [optional] [readonly] |
+|**ResourceURN** | Pointer to **string** | Unique name of the resource. | [optional] [readonly] |
 
 ## Methods
 
@@ -108,31 +106,6 @@ SetCreatedByUserId sets CreatedByUserId field to given value.
 
 HasCreatedByUserId returns a boolean if a field has been set.
 
-### GetCreatedByUserUuid
-
-`func (o *Metadata) GetCreatedByUserUuid() string`
-
-GetCreatedByUserUuid returns the CreatedByUserUuid field if non-nil, zero value otherwise.
-
-### GetCreatedByUserUuidOk
-
-`func (o *Metadata) GetCreatedByUserUuidOk() (*string, bool)`
-
-GetCreatedByUserUuidOk returns a tuple with the CreatedByUserUuid field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCreatedByUserUuid
-
-`func (o *Metadata) SetCreatedByUserUuid(v string)`
-
-SetCreatedByUserUuid sets CreatedByUserUuid field to given value.
-
-### HasCreatedByUserUuid
-
-`func (o *Metadata) HasCreatedByUserUuid() bool`
-
-HasCreatedByUserUuid returns a boolean if a field has been set.
-
 ### GetLastModifiedDate
 
 `func (o *Metadata) GetLastModifiedDate() time.Time`
@@ -208,54 +181,29 @@ SetLastModifiedByUserId sets LastModifiedByUserId field to given value.
 
 HasLastModifiedByUserId returns a boolean if a field has been set.
 
-### GetLastModifiedByUserUuid
+### GetResourceURN
 
-`func (o *Metadata) GetLastModifiedByUserUuid() string`
+`func (o *Metadata) GetResourceURN() string`
 
-GetLastModifiedByUserUuid returns the LastModifiedByUserUuid field if non-nil, zero value otherwise.
+GetResourceURN returns the ResourceURN field if non-nil, zero value otherwise.
 
-### GetLastModifiedByUserUuidOk
+### GetResourceURNOk
 
-`func (o *Metadata) GetLastModifiedByUserUuidOk() (*string, bool)`
+`func (o *Metadata) GetResourceURNOk() (*string, bool)`
 
-GetLastModifiedByUserUuidOk returns a tuple with the LastModifiedByUserUuid field if it's non-nil, zero value otherwise
+GetResourceURNOk returns a tuple with the ResourceURN field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetLastModifiedByUserUuid
+### SetResourceURN
 
-`func (o *Metadata) SetLastModifiedByUserUuid(v string)`
+`func (o *Metadata) SetResourceURN(v string)`
 
-SetLastModifiedByUserUuid sets LastModifiedByUserUuid field to given value.
+SetResourceURN sets ResourceURN field to given value.
 
-### HasLastModifiedByUserUuid
+### HasResourceURN
 
-`func (o *Metadata) HasLastModifiedByUserUuid() bool`
+`func (o *Metadata) HasResourceURN() bool`
 
-HasLastModifiedByUserUuid returns a boolean if a field has been set.
-
-### GetState
-
-`func (o *Metadata) GetState() string`
-
-GetState returns the State field if non-nil, zero value otherwise.
-
-### GetStateOk
-
-`func (o *Metadata) GetStateOk() (*string, bool)`
-
-GetStateOk returns a tuple with the State field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetState
-
-`func (o *Metadata) SetState(v string)`
-
-SetState sets State field to given value.
-
-### HasState
-
-`func (o *Metadata) HasState() bool`
-
-HasState returns a boolean if a field has been set.
+HasResourceURN returns a boolean if a field has been set.
 
 

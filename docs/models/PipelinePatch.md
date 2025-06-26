@@ -4,13 +4,14 @@
 
 |Name | Type | Description | Notes|
 |------------ | ------------- | ------------- | -------------|
-|**Properties** | [**PipelinePatchProperties**](PipelinePatchProperties.md) |  | |
+|**Metadata** | Pointer to **map[string]interface{}** | Metadata | [optional] |
+|**Properties** | [**PipelineNoAddr**](PipelineNoAddr.md) |  | |
 
 ## Methods
 
 ### NewPipelinePatch
 
-`func NewPipelinePatch(properties PipelinePatchProperties, ) *PipelinePatch`
+`func NewPipelinePatch(properties PipelineNoAddr, ) *PipelinePatch`
 
 NewPipelinePatch instantiates a new PipelinePatch object
 This constructor will assign default values to properties that have it defined,
@@ -25,22 +26,47 @@ NewPipelinePatchWithDefaults instantiates a new PipelinePatch object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetMetadata
+
+`func (o *PipelinePatch) GetMetadata() map[string]interface{}`
+
+GetMetadata returns the Metadata field if non-nil, zero value otherwise.
+
+### GetMetadataOk
+
+`func (o *PipelinePatch) GetMetadataOk() (*map[string]interface{}, bool)`
+
+GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetadata
+
+`func (o *PipelinePatch) SetMetadata(v map[string]interface{})`
+
+SetMetadata sets Metadata field to given value.
+
+### HasMetadata
+
+`func (o *PipelinePatch) HasMetadata() bool`
+
+HasMetadata returns a boolean if a field has been set.
+
 ### GetProperties
 
-`func (o *PipelinePatch) GetProperties() PipelinePatchProperties`
+`func (o *PipelinePatch) GetProperties() PipelineNoAddr`
 
 GetProperties returns the Properties field if non-nil, zero value otherwise.
 
 ### GetPropertiesOk
 
-`func (o *PipelinePatch) GetPropertiesOk() (*PipelinePatchProperties, bool)`
+`func (o *PipelinePatch) GetPropertiesOk() (*PipelineNoAddr, bool)`
 
 GetPropertiesOk returns a tuple with the Properties field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProperties
 
-`func (o *PipelinePatch) SetProperties(v PipelinePatchProperties)`
+`func (o *PipelinePatch) SetProperties(v PipelineNoAddr)`
 
 SetProperties sets Properties field to given value.
 

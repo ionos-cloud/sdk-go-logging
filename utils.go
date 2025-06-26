@@ -1,7 +1,7 @@
 /*
- * IONOS Logging REST API
+ * IONOS Logging Service REST API
  *
- * The logging service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data.  This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
+ * The Logging Service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data. This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
  *
  * API version: 0.0.1
  */
@@ -12,7 +12,9 @@ package ionoscloud
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
+	"strings"
 	"time"
 )
 
@@ -773,4 +775,24 @@ func IsNil(i interface{}) bool {
 		return reflect.ValueOf(i).IsZero()
 	}
 	return false
+}
+
+// EnsureURLFormat checks that the URL has the correct format (no trailing slash,
+// has http/https scheme prefix) and updates it if necessary
+func EnsureURLFormat(url string) string {
+	length := len(url)
+
+	if length <= 1 {
+		return url
+	}
+
+	if url[length-1] == '/' {
+		url = url[:length-1]
+	}
+
+	if !strings.HasPrefix(url, "https://") && !strings.HasPrefix(url, "http://") {
+		url = fmt.Sprintf("https://%s", url)
+	}
+
+	return url
 }

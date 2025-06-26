@@ -1,7 +1,7 @@
 /*
- * IONOS Logging REST API
+ * IONOS Logging Service REST API
  *
- * The logging service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data.  This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
+ * The Logging Service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data. This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
  *
  * API version: 0.0.1
  */
@@ -27,7 +27,7 @@ const (
 	IonosApiUrlEnvVar     = "IONOS_API_URL"
 	IonosPinnedCertEnvVar = "IONOS_PINNED_CERT"
 	IonosLogLevelEnvVar   = "IONOS_LOG_LEVEL"
-	DefaultIonosServerUrl = "https://logging.de-txl.ionos.com"
+	DefaultIonosServerUrl = "https://logging.de-fra.ionos.com"
 	DefaultIonosBasePath  = ""
 	defaultMaxRetries     = 3
 	defaultWaitTime       = time.Duration(100) * time.Millisecond
@@ -36,11 +36,13 @@ const (
 
 var (
 	IonosServerUrls = []string{
-		"https://logging.de-txl.ionos.com",
 		"https://logging.de-fra.ionos.com",
+		"https://logging.de-txl.ionos.com",
+		"https://logging.es-vit.ionos.com",
+		"https://logging.gb-bhx.ionos.com",
 		"https://logging.gb-lhr.ionos.com",
 		"https://logging.fr-par.ionos.com",
-		"https://logging.es-vit.ionos.com",
+		"https://logging.us-mci.ionos.com",
 	}
 )
 
@@ -138,7 +140,7 @@ func NewConfiguration(username, password, token, hostUrl string) *Configuration 
 	cfg := &Configuration{
 		DefaultHeader:      make(map[string]string),
 		DefaultQueryParams: url.Values{},
-		UserAgent:          "ionos-cloud-sdk-go-logging/v1.2.0",
+		UserAgent:          "ionos-cloud-sdk-go-logging/v1.3.0",
 		Debug:              false,
 		Username:           username,
 		Password:           password,
@@ -150,27 +152,43 @@ func NewConfiguration(username, password, token, hostUrl string) *Configuration 
 		LogLevel:           getLogLevelFromEnv(),
 		Servers: ServerConfigurations{
 			{
-				URL:         getServerUrl(hostUrl),
-				Description: "No description provided",
+				URL:         "https://logging.de-fra.ionos.com",
+				Description: "service endpoint for location de-fra",
 			},
 			{
-				URL:         getServerUrl(hostUrl),
-				Description: "No description provided",
+				URL:         "https://logging.de-txl.ionos.com",
+				Description: "service endpoint for location de-txl",
 			},
 			{
-				URL:         getServerUrl(hostUrl),
-				Description: "No description provided",
+				URL:         "https://logging.es-vit.ionos.com",
+				Description: "service endpoint for location es-vit",
 			},
 			{
-				URL:         getServerUrl(hostUrl),
-				Description: "No description provided",
+				URL:         "https://logging.gb-bhx.ionos.com",
+				Description: "service endpoint for location gb-bhx",
 			},
 			{
-				URL:         getServerUrl(hostUrl),
-				Description: "No description provided",
+				URL:         "https://logging.gb-lhr.ionos.com",
+				Description: "service endpoint for location gb-lhr",
+			},
+			{
+				URL:         "https://logging.fr-par.ionos.com",
+				Description: "service endpoint for location fr-par",
+			},
+			{
+				URL:         "https://logging.us-mci.ionos.com",
+				Description: "service endpoint for location us-mci",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{},
+	}
+	if hostUrl != "" {
+		cfg.Servers = ServerConfigurations{
+			{
+				URL:         getServerUrl(hostUrl),
+				Description: "overriden endpoint",
+			},
+		}
 	}
 	return cfg
 }
@@ -195,6 +213,12 @@ func (sc ServerConfigurations) URL(index int, variables map[string]string) (stri
 	}
 	server := sc[index]
 	url := server.URL
+	if !strings.Contains(url, "http://") && !strings.Contains(url, "https://") {
+		return "", fmt.Errorf(
+			"the URL provided appears to be missing the protocol scheme prefix (\"https://\" or \"http://\"), please verify and try again: %s",
+			url,
+		)
+	}
 
 	// go through variables and replace placeholders
 	for name, variable := range server.Variables {
@@ -277,14 +301,12 @@ func getServerUrl(serverUrl string) string {
 	if serverUrl == "" {
 		return DefaultIonosServerUrl
 	}
-	// Support both HTTPS & HTTP schemas
-	if !strings.HasPrefix(serverUrl, "https://") && !strings.HasPrefix(serverUrl, "http://") {
-		serverUrl = fmt.Sprintf("https://%s", serverUrl)
-	}
+
 	if !strings.HasSuffix(serverUrl, DefaultIonosBasePath) {
 		serverUrl = fmt.Sprintf("%s%s", serverUrl, DefaultIonosBasePath)
 	}
-	return serverUrl
+
+	return EnsureURLFormat(serverUrl)
 }
 
 // ServerURLWithContext returns a new server URL given an endpoint

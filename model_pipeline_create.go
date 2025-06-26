@@ -1,7 +1,7 @@
 /*
- * IONOS Logging REST API
+ * IONOS Logging Service REST API
  *
- * The logging service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data.  This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
+ * The Logging Service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data. This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
  *
  * API version: 0.0.1
  */
@@ -14,16 +14,16 @@ import (
 	"encoding/json"
 )
 
-// PipelineCreate Request payload with all data needed to create a new logging pipeline
+// PipelineCreate A pipeline consists of the building blocks of a centralized logging system including supported log agents and log sources and also public endpoints to push and access logs.
 type PipelineCreate struct {
-	Properties *PipelineCreateProperties `json:"properties"`
+	Properties *PipelineNoAddr `json:"properties"`
 }
 
 // NewPipelineCreate instantiates a new PipelineCreate object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPipelineCreate(properties PipelineCreateProperties) *PipelineCreate {
+func NewPipelineCreate(properties PipelineNoAddr) *PipelineCreate {
 	this := PipelineCreate{}
 
 	this.Properties = &properties
@@ -40,8 +40,8 @@ func NewPipelineCreateWithDefaults() *PipelineCreate {
 }
 
 // GetProperties returns the Properties field value
-// If the value is explicit nil, the zero value for PipelineCreateProperties will be returned
-func (o *PipelineCreate) GetProperties() *PipelineCreateProperties {
+// If the value is explicit nil, the zero value for PipelineNoAddr will be returned
+func (o *PipelineCreate) GetProperties() *PipelineNoAddr {
 	if o == nil {
 		return nil
 	}
@@ -53,7 +53,7 @@ func (o *PipelineCreate) GetProperties() *PipelineCreateProperties {
 // GetPropertiesOk returns a tuple with the Properties field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PipelineCreate) GetPropertiesOk() (*PipelineCreateProperties, bool) {
+func (o *PipelineCreate) GetPropertiesOk() (*PipelineNoAddr, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -62,7 +62,7 @@ func (o *PipelineCreate) GetPropertiesOk() (*PipelineCreateProperties, bool) {
 }
 
 // SetProperties sets field value
-func (o *PipelineCreate) SetProperties(v PipelineCreateProperties) {
+func (o *PipelineCreate) SetProperties(v PipelineNoAddr) {
 
 	o.Properties = &v
 

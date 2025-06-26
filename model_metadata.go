@@ -1,7 +1,7 @@
 /*
- * IONOS Logging REST API
+ * IONOS Logging Service REST API
  *
- * The logging service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data.  This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
+ * The Logging Service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data. This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
  *
  * API version: 0.0.1
  */
@@ -15,20 +15,22 @@ import (
 	"time"
 )
 
-// Metadata Metadata of the resource
+// Metadata Metadata of the resource.
 type Metadata struct {
 	// The ISO 8601 creation timestamp.
-	CreatedDate       *IonosTime `json:"createdDate,omitempty"`
-	CreatedBy         *string    `json:"createdBy,omitempty"`
-	CreatedByUserId   *string    `json:"createdByUserId,omitempty"`
-	CreatedByUserUuid *string    `json:"createdByUserUuid,omitempty"`
+	CreatedDate *IonosTime `json:"createdDate,omitempty"`
+	// Unique name of the identity that created the resource.
+	CreatedBy *string `json:"createdBy,omitempty"`
+	// Unique id of the identity that created the resource.
+	CreatedByUserId *string `json:"createdByUserId,omitempty"`
 	// The ISO 8601 modified timestamp.
-	LastModifiedDate       *IonosTime `json:"lastModifiedDate,omitempty"`
-	LastModifiedBy         *string    `json:"lastModifiedBy,omitempty"`
-	LastModifiedByUserId   *string    `json:"lastModifiedByUserId,omitempty"`
-	LastModifiedByUserUuid *string    `json:"lastModifiedByUserUuid,omitempty"`
-	// The current state reported back by the pipeline.
-	State *string `json:"state,omitempty"`
+	LastModifiedDate *IonosTime `json:"lastModifiedDate,omitempty"`
+	// Unique name of the identity that last modified the resource.
+	LastModifiedBy *string `json:"lastModifiedBy,omitempty"`
+	// Unique id of the identity that last modified the resource.
+	LastModifiedByUserId *string `json:"lastModifiedByUserId,omitempty"`
+	// Unique name of the resource.
+	ResourceURN *string `json:"resourceURN,omitempty"`
 }
 
 // NewMetadata instantiates a new Metadata object
@@ -170,44 +172,6 @@ func (o *Metadata) HasCreatedByUserId() bool {
 	return false
 }
 
-// GetCreatedByUserUuid returns the CreatedByUserUuid field value
-// If the value is explicit nil, the zero value for string will be returned
-func (o *Metadata) GetCreatedByUserUuid() *string {
-	if o == nil {
-		return nil
-	}
-
-	return o.CreatedByUserUuid
-
-}
-
-// GetCreatedByUserUuidOk returns a tuple with the CreatedByUserUuid field value
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Metadata) GetCreatedByUserUuidOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-
-	return o.CreatedByUserUuid, true
-}
-
-// SetCreatedByUserUuid sets field value
-func (o *Metadata) SetCreatedByUserUuid(v string) {
-
-	o.CreatedByUserUuid = &v
-
-}
-
-// HasCreatedByUserUuid returns a boolean if a field has been set.
-func (o *Metadata) HasCreatedByUserUuid() bool {
-	if o != nil && o.CreatedByUserUuid != nil {
-		return true
-	}
-
-	return false
-}
-
 // GetLastModifiedDate returns the LastModifiedDate field value
 // If the value is explicit nil, the zero value for time.Time will be returned
 func (o *Metadata) GetLastModifiedDate() *time.Time {
@@ -329,76 +293,38 @@ func (o *Metadata) HasLastModifiedByUserId() bool {
 	return false
 }
 
-// GetLastModifiedByUserUuid returns the LastModifiedByUserUuid field value
+// GetResourceURN returns the ResourceURN field value
 // If the value is explicit nil, the zero value for string will be returned
-func (o *Metadata) GetLastModifiedByUserUuid() *string {
+func (o *Metadata) GetResourceURN() *string {
 	if o == nil {
 		return nil
 	}
 
-	return o.LastModifiedByUserUuid
+	return o.ResourceURN
 
 }
 
-// GetLastModifiedByUserUuidOk returns a tuple with the LastModifiedByUserUuid field value
+// GetResourceURNOk returns a tuple with the ResourceURN field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Metadata) GetLastModifiedByUserUuidOk() (*string, bool) {
+func (o *Metadata) GetResourceURNOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
 
-	return o.LastModifiedByUserUuid, true
+	return o.ResourceURN, true
 }
 
-// SetLastModifiedByUserUuid sets field value
-func (o *Metadata) SetLastModifiedByUserUuid(v string) {
+// SetResourceURN sets field value
+func (o *Metadata) SetResourceURN(v string) {
 
-	o.LastModifiedByUserUuid = &v
-
-}
-
-// HasLastModifiedByUserUuid returns a boolean if a field has been set.
-func (o *Metadata) HasLastModifiedByUserUuid() bool {
-	if o != nil && o.LastModifiedByUserUuid != nil {
-		return true
-	}
-
-	return false
-}
-
-// GetState returns the State field value
-// If the value is explicit nil, the zero value for string will be returned
-func (o *Metadata) GetState() *string {
-	if o == nil {
-		return nil
-	}
-
-	return o.State
+	o.ResourceURN = &v
 
 }
 
-// GetStateOk returns a tuple with the State field value
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Metadata) GetStateOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-
-	return o.State, true
-}
-
-// SetState sets field value
-func (o *Metadata) SetState(v string) {
-
-	o.State = &v
-
-}
-
-// HasState returns a boolean if a field has been set.
-func (o *Metadata) HasState() bool {
-	if o != nil && o.State != nil {
+// HasResourceURN returns a boolean if a field has been set.
+func (o *Metadata) HasResourceURN() bool {
+	if o != nil && o.ResourceURN != nil {
 		return true
 	}
 
@@ -419,10 +345,6 @@ func (o Metadata) MarshalJSON() ([]byte, error) {
 		toSerialize["createdByUserId"] = o.CreatedByUserId
 	}
 
-	if o.CreatedByUserUuid != nil {
-		toSerialize["createdByUserUuid"] = o.CreatedByUserUuid
-	}
-
 	if o.LastModifiedDate != nil {
 		toSerialize["lastModifiedDate"] = o.LastModifiedDate
 	}
@@ -435,12 +357,8 @@ func (o Metadata) MarshalJSON() ([]byte, error) {
 		toSerialize["lastModifiedByUserId"] = o.LastModifiedByUserId
 	}
 
-	if o.LastModifiedByUserUuid != nil {
-		toSerialize["lastModifiedByUserUuid"] = o.LastModifiedByUserUuid
-	}
-
-	if o.State != nil {
-		toSerialize["state"] = o.State
+	if o.ResourceURN != nil {
+		toSerialize["resourceURN"] = o.ResourceURN
 	}
 
 	return json.Marshal(toSerialize)

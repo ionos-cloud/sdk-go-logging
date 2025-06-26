@@ -1,7 +1,7 @@
 /*
- * IONOS Logging REST API
+ * IONOS Logging Service REST API
  *
- * The logging service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data.  This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
+ * The Logging Service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data. This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
  *
  * API version: 0.0.1
  */
@@ -14,16 +14,18 @@ import (
 	"encoding/json"
 )
 
-// PipelinePatch Request payload with any data that is possible to patch a logging pipeline
+// PipelinePatch struct for PipelinePatch
 type PipelinePatch struct {
-	Properties *PipelinePatchProperties `json:"properties"`
+	// Metadata
+	Metadata   *map[string]interface{} `json:"metadata,omitempty"`
+	Properties *PipelineNoAddr         `json:"properties"`
 }
 
 // NewPipelinePatch instantiates a new PipelinePatch object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPipelinePatch(properties PipelinePatchProperties) *PipelinePatch {
+func NewPipelinePatch(properties PipelineNoAddr) *PipelinePatch {
 	this := PipelinePatch{}
 
 	this.Properties = &properties
@@ -39,9 +41,47 @@ func NewPipelinePatchWithDefaults() *PipelinePatch {
 	return &this
 }
 
+// GetMetadata returns the Metadata field value
+// If the value is explicit nil, the zero value for map[string]interface{} will be returned
+func (o *PipelinePatch) GetMetadata() *map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+
+	return o.Metadata
+
+}
+
+// GetMetadataOk returns a tuple with the Metadata field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PipelinePatch) GetMetadataOk() (*map[string]interface{}, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return o.Metadata, true
+}
+
+// SetMetadata sets field value
+func (o *PipelinePatch) SetMetadata(v map[string]interface{}) {
+
+	o.Metadata = &v
+
+}
+
+// HasMetadata returns a boolean if a field has been set.
+func (o *PipelinePatch) HasMetadata() bool {
+	if o != nil && o.Metadata != nil {
+		return true
+	}
+
+	return false
+}
+
 // GetProperties returns the Properties field value
-// If the value is explicit nil, the zero value for PipelinePatchProperties will be returned
-func (o *PipelinePatch) GetProperties() *PipelinePatchProperties {
+// If the value is explicit nil, the zero value for PipelineNoAddr will be returned
+func (o *PipelinePatch) GetProperties() *PipelineNoAddr {
 	if o == nil {
 		return nil
 	}
@@ -53,7 +93,7 @@ func (o *PipelinePatch) GetProperties() *PipelinePatchProperties {
 // GetPropertiesOk returns a tuple with the Properties field value
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *PipelinePatch) GetPropertiesOk() (*PipelinePatchProperties, bool) {
+func (o *PipelinePatch) GetPropertiesOk() (*PipelineNoAddr, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -62,7 +102,7 @@ func (o *PipelinePatch) GetPropertiesOk() (*PipelinePatchProperties, bool) {
 }
 
 // SetProperties sets field value
-func (o *PipelinePatch) SetProperties(v PipelinePatchProperties) {
+func (o *PipelinePatch) SetProperties(v PipelineNoAddr) {
 
 	o.Properties = &v
 
@@ -79,6 +119,10 @@ func (o *PipelinePatch) HasProperties() bool {
 
 func (o PipelinePatch) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Metadata != nil {
+		toSerialize["metadata"] = o.Metadata
+	}
+
 	if o.Properties != nil {
 		toSerialize["properties"] = o.Properties
 	}

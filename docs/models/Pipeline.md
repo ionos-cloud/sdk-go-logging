@@ -4,15 +4,19 @@
 
 |Name | Type | Description | Notes|
 |------------ | ------------- | ------------- | -------------|
-|**Id** | Pointer to **string** | The unique ID of the resource. | [optional] |
-|**Metadata** | Pointer to [**Metadata**](Metadata.md) |  | [optional] |
-|**Properties** | Pointer to [**PipelineProperties**](PipelineProperties.md) |  | [optional] |
+|**Name** | **string** | The name of the pipeline. Must be not more that 20 characters long.  | |
+|**Logs** | Pointer to [**[]PipelineNoAddrLogs**](PipelineNoAddrLogs.md) |  | [optional] |
+|**TcpAddress** | Pointer to **string** | The TCP address of the pipeline. This is the address to which logs are sent using the TCP protocol.  | [optional] |
+|**HttpAddress** | Pointer to **string** | The HTTP address of the pipeline. This is the address to which logs are sent using the HTTP protocol.  | [optional] |
+|**GrafanaAddress** | Pointer to **string** | The Grafana address is where user can access their logs, create dashboards, and set up alerts.  | [optional] |
+|**ResourceTier** | Pointer to **string** |  | [optional] |
+|**Key** | Pointer to **string** | The key is shared once and is used to authenticate the logs sent to the pipeline.  | [optional] |
 
 ## Methods
 
 ### NewPipeline
 
-`func NewPipeline() *Pipeline`
+`func NewPipeline(name string, ) *Pipeline`
 
 NewPipeline instantiates a new Pipeline object
 This constructor will assign default values to properties that have it defined,
@@ -27,79 +31,174 @@ NewPipelineWithDefaults instantiates a new Pipeline object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetName
 
-`func (o *Pipeline) GetId() string`
+`func (o *Pipeline) GetName() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetName returns the Name field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetNameOk
 
-`func (o *Pipeline) GetIdOk() (*string, bool)`
+`func (o *Pipeline) GetNameOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetName
 
-`func (o *Pipeline) SetId(v string)`
+`func (o *Pipeline) SetName(v string)`
 
-SetId sets Id field to given value.
+SetName sets Name field to given value.
 
-### HasId
 
-`func (o *Pipeline) HasId() bool`
+### GetLogs
 
-HasId returns a boolean if a field has been set.
+`func (o *Pipeline) GetLogs() []PipelineNoAddrLogs`
 
-### GetMetadata
+GetLogs returns the Logs field if non-nil, zero value otherwise.
 
-`func (o *Pipeline) GetMetadata() Metadata`
+### GetLogsOk
 
-GetMetadata returns the Metadata field if non-nil, zero value otherwise.
+`func (o *Pipeline) GetLogsOk() (*[]PipelineNoAddrLogs, bool)`
 
-### GetMetadataOk
-
-`func (o *Pipeline) GetMetadataOk() (*Metadata, bool)`
-
-GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
+GetLogsOk returns a tuple with the Logs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMetadata
+### SetLogs
 
-`func (o *Pipeline) SetMetadata(v Metadata)`
+`func (o *Pipeline) SetLogs(v []PipelineNoAddrLogs)`
 
-SetMetadata sets Metadata field to given value.
+SetLogs sets Logs field to given value.
 
-### HasMetadata
+### HasLogs
 
-`func (o *Pipeline) HasMetadata() bool`
+`func (o *Pipeline) HasLogs() bool`
 
-HasMetadata returns a boolean if a field has been set.
+HasLogs returns a boolean if a field has been set.
 
-### GetProperties
+### GetTcpAddress
 
-`func (o *Pipeline) GetProperties() PipelineProperties`
+`func (o *Pipeline) GetTcpAddress() string`
 
-GetProperties returns the Properties field if non-nil, zero value otherwise.
+GetTcpAddress returns the TcpAddress field if non-nil, zero value otherwise.
 
-### GetPropertiesOk
+### GetTcpAddressOk
 
-`func (o *Pipeline) GetPropertiesOk() (*PipelineProperties, bool)`
+`func (o *Pipeline) GetTcpAddressOk() (*string, bool)`
 
-GetPropertiesOk returns a tuple with the Properties field if it's non-nil, zero value otherwise
+GetTcpAddressOk returns a tuple with the TcpAddress field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProperties
+### SetTcpAddress
 
-`func (o *Pipeline) SetProperties(v PipelineProperties)`
+`func (o *Pipeline) SetTcpAddress(v string)`
 
-SetProperties sets Properties field to given value.
+SetTcpAddress sets TcpAddress field to given value.
 
-### HasProperties
+### HasTcpAddress
 
-`func (o *Pipeline) HasProperties() bool`
+`func (o *Pipeline) HasTcpAddress() bool`
 
-HasProperties returns a boolean if a field has been set.
+HasTcpAddress returns a boolean if a field has been set.
+
+### GetHttpAddress
+
+`func (o *Pipeline) GetHttpAddress() string`
+
+GetHttpAddress returns the HttpAddress field if non-nil, zero value otherwise.
+
+### GetHttpAddressOk
+
+`func (o *Pipeline) GetHttpAddressOk() (*string, bool)`
+
+GetHttpAddressOk returns a tuple with the HttpAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHttpAddress
+
+`func (o *Pipeline) SetHttpAddress(v string)`
+
+SetHttpAddress sets HttpAddress field to given value.
+
+### HasHttpAddress
+
+`func (o *Pipeline) HasHttpAddress() bool`
+
+HasHttpAddress returns a boolean if a field has been set.
+
+### GetGrafanaAddress
+
+`func (o *Pipeline) GetGrafanaAddress() string`
+
+GetGrafanaAddress returns the GrafanaAddress field if non-nil, zero value otherwise.
+
+### GetGrafanaAddressOk
+
+`func (o *Pipeline) GetGrafanaAddressOk() (*string, bool)`
+
+GetGrafanaAddressOk returns a tuple with the GrafanaAddress field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGrafanaAddress
+
+`func (o *Pipeline) SetGrafanaAddress(v string)`
+
+SetGrafanaAddress sets GrafanaAddress field to given value.
+
+### HasGrafanaAddress
+
+`func (o *Pipeline) HasGrafanaAddress() bool`
+
+HasGrafanaAddress returns a boolean if a field has been set.
+
+### GetResourceTier
+
+`func (o *Pipeline) GetResourceTier() string`
+
+GetResourceTier returns the ResourceTier field if non-nil, zero value otherwise.
+
+### GetResourceTierOk
+
+`func (o *Pipeline) GetResourceTierOk() (*string, bool)`
+
+GetResourceTierOk returns a tuple with the ResourceTier field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResourceTier
+
+`func (o *Pipeline) SetResourceTier(v string)`
+
+SetResourceTier sets ResourceTier field to given value.
+
+### HasResourceTier
+
+`func (o *Pipeline) HasResourceTier() bool`
+
+HasResourceTier returns a boolean if a field has been set.
+
+### GetKey
+
+`func (o *Pipeline) GetKey() string`
+
+GetKey returns the Key field if non-nil, zero value otherwise.
+
+### GetKeyOk
+
+`func (o *Pipeline) GetKeyOk() (*string, bool)`
+
+GetKeyOk returns a tuple with the Key field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetKey
+
+`func (o *Pipeline) SetKey(v string)`
+
+SetKey sets Key field to given value.
+
+### HasKey
+
+`func (o *Pipeline) HasKey() bool`
+
+HasKey returns a boolean if a field has been set.
 
 

@@ -1,7 +1,7 @@
 /*
- * IONOS Logging REST API
+ * IONOS Logging Service REST API
  *
- * The logging service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data.  This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
+ * The Logging Service offers a centralized platform to collect and store logs from various systems and applications. It includes tools to search, filter, visualize, and create alerts based on your log data. This API provides programmatic control over logging pipelines, enabling you to create new pipelines or modify existing ones. It mirrors the functionality of the DCD visual tool, ensuring a consistent experience regardless of your chosen interface.
  *
  * API version: 0.0.1
  */
@@ -50,10 +50,10 @@ const (
 	RequestStatusFailed  = "FAILED"
 	RequestStatusDone    = "DONE"
 
-	Version = "1.2.0"
+	Version = "1.3.0"
 )
 
-// APIClient manages communication with the IONOS Logging REST API API v0.0.1
+// APIClient manages communication with the IONOS Logging Service REST API API v0.0.1
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -62,6 +62,8 @@ type APIClient struct {
 	// API Services
 
 	CentralApi *CentralApiService
+
+	KeyApi *KeyApiService
 
 	PipelinesApi *PipelinesApiService
 }
@@ -90,6 +92,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.CentralApi = (*CentralApiService)(&c.common)
+	c.KeyApi = (*KeyApiService)(&c.common)
 	c.PipelinesApi = (*PipelinesApiService)(&c.common)
 
 	return c
@@ -258,8 +261,15 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, time.Duratio
 			}
 		}
 
-		if c.cfg.Debug || c.cfg.LogLevel.Satisfies(Trace) {
-			dump, err := httputil.DumpRequestOut(clonedRequest, true)
+		if c.cfg.Debug || c.cfg.LogLevel.Satisfies(Debug) {
+			logRequest := request.Clone(request.Context())
+
+			// Remove the Authorization header if Debug is enabled (but not in Trace mode)
+			if !c.cfg.LogLevel.Satisfies(Trace) {
+				logRequest.Header.Del("Authorization")
+			}
+
+			dump, err := httputil.DumpRequestOut(logRequest, true)
 			if err == nil {
 				c.cfg.Logger.Printf(" DumpRequestOut : %s\n", string(dump))
 			} else {
@@ -276,7 +286,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, time.Duratio
 			return resp, httpRequestTime, err
 		}
 
-		if c.cfg.Debug || c.cfg.LogLevel.Satisfies(Trace) {
+		if c.cfg.Debug || c.cfg.LogLevel.Satisfies(Debug) {
 			dump, err := httputil.DumpResponse(resp, true)
 			if err == nil {
 				c.cfg.Logger.Printf("\n DumpResponse : %s\n", string(dump))
