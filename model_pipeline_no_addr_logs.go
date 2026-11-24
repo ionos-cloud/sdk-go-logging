@@ -21,7 +21,9 @@ type PipelineNoAddrLogs struct {
 	// The tag of the logs. Tag represents a short alphanumeric badge (3–20 characters). It must contain only letters and digits, with no special characters or spaces.
 	Tag *string `json:"tag"`
 	// The protocol used to send logs. Could be one of the following: `http`, `tcp`.
-	Protocol     *string                           `json:"protocol"`
+	Protocol *string `json:"protocol"`
+	// Optional custom labels to filter and report logs
+	Labels       *[]string                         `json:"labels,omitempty"`
 	Destinations *[]PipelineNoAddrLogsDestinations `json:"destinations"`
 }
 
@@ -162,6 +164,44 @@ func (o *PipelineNoAddrLogs) HasProtocol() bool {
 	return false
 }
 
+// GetLabels returns the Labels field value
+// If the value is explicit nil, the zero value for []string will be returned
+func (o *PipelineNoAddrLogs) GetLabels() *[]string {
+	if o == nil {
+		return nil
+	}
+
+	return o.Labels
+
+}
+
+// GetLabelsOk returns a tuple with the Labels field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PipelineNoAddrLogs) GetLabelsOk() (*[]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return o.Labels, true
+}
+
+// SetLabels sets field value
+func (o *PipelineNoAddrLogs) SetLabels(v []string) {
+
+	o.Labels = &v
+
+}
+
+// HasLabels returns a boolean if a field has been set.
+func (o *PipelineNoAddrLogs) HasLabels() bool {
+	if o != nil && o.Labels != nil {
+		return true
+	}
+
+	return false
+}
+
 // GetDestinations returns the Destinations field value
 // If the value is explicit nil, the zero value for []PipelineNoAddrLogsDestinations will be returned
 func (o *PipelineNoAddrLogs) GetDestinations() *[]PipelineNoAddrLogsDestinations {
@@ -212,6 +252,10 @@ func (o PipelineNoAddrLogs) MarshalJSON() ([]byte, error) {
 
 	if o.Protocol != nil {
 		toSerialize["protocol"] = o.Protocol
+	}
+
+	if o.Labels != nil {
+		toSerialize["labels"] = o.Labels
 	}
 
 	if o.Destinations != nil {
