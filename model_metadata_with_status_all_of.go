@@ -16,8 +16,10 @@ import (
 
 // MetadataWithStatusAllOf struct for MetadataWithStatusAllOf
 type MetadataWithStatusAllOf struct {
-	// The status of the object. The status can be: * `AVAILABLE` - resource exists and is healthy. * `PROVISIONING` - resource is being created or updated. * `DESTROYING` - delete command was issued, the resource is being deleted. * `FAILED` - resource failed, details in `failureMessage`.
+	// The state of the object. The state can be: * `PROVISIONING` - resource is being created. * `AVAILABLE` - resource exists and is healthy. * `UPDATING` - resource is being updated. * `DESTROYING` - delete command was issued, the resource is being deleted. * `FAILED` - resource failed, details in `statusMessage`.
 	State *string `json:"state"`
+	// The message of the failure if state is `FAILED`.
+	StatusMessage *string `json:"statusMessage,omitempty"`
 }
 
 // NewMetadataWithStatusAllOf instantiates a new MetadataWithStatusAllOf object
@@ -78,11 +80,51 @@ func (o *MetadataWithStatusAllOf) HasState() bool {
 	return false
 }
 
+// GetStatusMessage returns the StatusMessage field value
+// If the value is explicit nil, the zero value for string will be returned
+func (o *MetadataWithStatusAllOf) GetStatusMessage() *string {
+	if o == nil {
+		return nil
+	}
+
+	return o.StatusMessage
+
+}
+
+// GetStatusMessageOk returns a tuple with the StatusMessage field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *MetadataWithStatusAllOf) GetStatusMessageOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+
+	return o.StatusMessage, true
+}
+
+// SetStatusMessage sets field value
+func (o *MetadataWithStatusAllOf) SetStatusMessage(v string) {
+
+	o.StatusMessage = &v
+
+}
+
+// HasStatusMessage returns a boolean if a field has been set.
+func (o *MetadataWithStatusAllOf) HasStatusMessage() bool {
+	if o != nil && o.StatusMessage != nil {
+		return true
+	}
+
+	return false
+}
+
 func (o MetadataWithStatusAllOf) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.State != nil {
 		toSerialize["state"] = o.State
 	}
+
+	toSerialize["statusMessage"] = o.StatusMessage
 
 	return json.Marshal(toSerialize)
 }

@@ -43,6 +43,8 @@ var (
 		"https://logging.gb-lhr.ionos.com",
 		"https://logging.fr-par.ionos.com",
 		"https://logging.us-mci.ionos.com",
+		"https://logging.us-ewr.ionos.com",
+		"https://logging.us-las.ionos.com",
 	}
 )
 
@@ -140,7 +142,7 @@ func NewConfiguration(username, password, token, hostUrl string) *Configuration 
 	cfg := &Configuration{
 		DefaultHeader:      make(map[string]string),
 		DefaultQueryParams: url.Values{},
-		UserAgent:          "ionos-cloud-sdk-go-logging/v1.3.0",
+		UserAgent:          "ionos-cloud-sdk-go-logging/v1.3.1",
 		Debug:              false,
 		Username:           username,
 		Password:           password,
@@ -178,6 +180,14 @@ func NewConfiguration(username, password, token, hostUrl string) *Configuration 
 			{
 				URL:         "https://logging.us-mci.ionos.com",
 				Description: "service endpoint for location us-mci",
+			},
+			{
+				URL:         "https://logging.us-ewr.ionos.com",
+				Description: "service endpoint for location us-ewr",
+			},
+			{
+				URL:         "https://logging.us-las.ionos.com",
+				Description: "service endpoint for location us-las",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{},

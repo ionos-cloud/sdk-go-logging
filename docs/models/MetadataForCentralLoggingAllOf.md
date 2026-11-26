@@ -5,6 +5,7 @@
 |Name | Type | Description | Notes|
 |------------ | ------------- | ------------- | -------------|
 |**GrafanaEndpoint** | **string** | The endpoint of the Grafana instance.  | [readonly] |
+|**Products** | Pointer to **[]string** | Products with central logging enabled. This is a comma-separated list of product names.  | [optional] [readonly] |
 
 ## Methods
 
@@ -44,5 +45,30 @@ and a boolean to check if the value has been set.
 
 SetGrafanaEndpoint sets GrafanaEndpoint field to given value.
 
+
+### GetProducts
+
+`func (o *MetadataForCentralLoggingAllOf) GetProducts() []string`
+
+GetProducts returns the Products field if non-nil, zero value otherwise.
+
+### GetProductsOk
+
+`func (o *MetadataForCentralLoggingAllOf) GetProductsOk() (*[]string, bool)`
+
+GetProductsOk returns a tuple with the Products field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProducts
+
+`func (o *MetadataForCentralLoggingAllOf) SetProducts(v []string)`
+
+SetProducts sets Products field to given value.
+
+### HasProducts
+
+`func (o *MetadataForCentralLoggingAllOf) HasProducts() bool`
+
+HasProducts returns a boolean if a field has been set.
 
 

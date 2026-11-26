@@ -9,7 +9,7 @@
 |**TcpAddress** | Pointer to **string** | The TCP address of the pipeline. This is the address to which logs are sent using the TCP protocol.  | [optional] |
 |**HttpAddress** | Pointer to **string** | The HTTP address of the pipeline. This is the address to which logs are sent using the HTTP protocol.  | [optional] |
 |**GrafanaAddress** | Pointer to **string** | The Grafana address is where user can access their logs, create dashboards, and set up alerts.  | [optional] |
-|**ResourceTier** | Pointer to **string** |  | [optional] |
+|**ResourceTier** | Pointer to **string** | The resource tier of the pipeline. This is used to determine the resources allocated to the pipeline.  | [optional] |
 |**Key** | Pointer to **string** | The key is shared once and is used to authenticate the logs sent to the pipeline.  | [optional] |
 
 ## Methods

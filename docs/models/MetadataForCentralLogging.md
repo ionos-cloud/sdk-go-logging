@@ -12,6 +12,7 @@
 |**LastModifiedByUserId** | Pointer to **string** | Unique id of the identity that last modified the resource. | [optional] [readonly] |
 |**ResourceURN** | Pointer to **string** | Unique name of the resource. | [optional] [readonly] |
 |**GrafanaEndpoint** | **string** | The endpoint of the Grafana instance.  | [readonly] |
+|**Products** | Pointer to **[]string** | Products with central logging enabled. This is a comma-separated list of product names.  | [optional] [readonly] |
 
 ## Methods
 
@@ -226,5 +227,30 @@ and a boolean to check if the value has been set.
 
 SetGrafanaEndpoint sets GrafanaEndpoint field to given value.
 
+
+### GetProducts
+
+`func (o *MetadataForCentralLogging) GetProducts() []string`
+
+GetProducts returns the Products field if non-nil, zero value otherwise.
+
+### GetProductsOk
+
+`func (o *MetadataForCentralLogging) GetProductsOk() (*[]string, bool)`
+
+GetProductsOk returns a tuple with the Products field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProducts
+
+`func (o *MetadataForCentralLogging) SetProducts(v []string)`
+
+SetProducts sets Products field to given value.
+
+### HasProducts
+
+`func (o *MetadataForCentralLogging) HasProducts() bool`
+
+HasProducts returns a boolean if a field has been set.
 
 

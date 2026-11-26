@@ -6,7 +6,8 @@
 |------------ | ------------- | ------------- | -------------|
 |**Source** | **string** | The source of the logs. Could be one of the following: &#x60;generic&#x60;, &#x60;kubernetes&#x60;, &#x60;docker&#x60;, &#x60;systemd&#x60;.  | |
 |**Tag** | **string** | The tag of the logs. Tag represents a short alphanumeric badge (3–20 characters). It must contain only letters and digits, with no special characters or spaces.  | |
-|**Protocol** | **string** | The protocol used to send logs. Could be one of the following: &#x60;http&#x60;, &#x60;tcp&#x60;.  | |
+|**Protocol** | **string** | The protocol used to send logs. Could be one of the following: &#x60;http&#x60;, &#x60;tcp&#x60;, &#x60;otlp&#x60;.  | [default to "http"]|
+|**Labels** | Pointer to **[]string** | Optional custom labels to filter and report logs  | [optional] |
 |**Destinations** | [**[]PipelineNoAddrLogsDestinations**](PipelineNoAddrLogsDestinations.md) |  | |
 
 ## Methods
@@ -87,6 +88,31 @@ and a boolean to check if the value has been set.
 
 SetProtocol sets Protocol field to given value.
 
+
+### GetLabels
+
+`func (o *PipelineNoAddrLogs) GetLabels() []string`
+
+GetLabels returns the Labels field if non-nil, zero value otherwise.
+
+### GetLabelsOk
+
+`func (o *PipelineNoAddrLogs) GetLabelsOk() (*[]string, bool)`
+
+GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLabels
+
+`func (o *PipelineNoAddrLogs) SetLabels(v []string)`
+
+SetLabels sets Labels field to given value.
+
+### HasLabels
+
+`func (o *PipelineNoAddrLogs) HasLabels() bool`
+
+HasLabels returns a boolean if a field has been set.
 
 ### GetDestinations
 

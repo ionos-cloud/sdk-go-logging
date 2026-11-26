@@ -31,12 +31,6 @@ type ApiPipelinesKeyPostRequest struct {
 	ctx        _context.Context
 	ApiService *KeyApiService
 	pipelineId string
-	body       *map[string]interface{}
-}
-
-func (r ApiPipelinesKeyPostRequest) Body(body map[string]interface{}) ApiPipelinesKeyPostRequest {
-	r.body = &body
-	return r
 }
 
 func (r ApiPipelinesKeyPostRequest) Execute() (KeyRead, *APIResponse, error) {
@@ -87,12 +81,9 @@ func (a *KeyApiService) PipelinesKeyPostExecute(r ApiPipelinesKeyPostRequest) (K
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
-	if r.body == nil {
-		return localVarReturnValue, nil, reportError("body is required and must be specified")
-	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -108,8 +99,6 @@ func (a *KeyApiService) PipelinesKeyPostExecute(r ApiPipelinesKeyPostRequest) (K
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	// body params
-	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
